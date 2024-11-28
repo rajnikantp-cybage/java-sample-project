@@ -20,20 +20,20 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Install PMD
-        run: |
-          wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.44.0/pmd-bin-6.44.0.zip
-          unzip pmd-bin-6.44.0.zip
+      run: |
+        wget https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.44.0/pmd-bin-6.44.0.zip
+        unzip pmd-bin-6.44.0.zip
     - name: Run PMD analysis
-        run: |
-          ./pmd-bin-6.44.0/bin/run.sh pmd -d ./src -R rulesets/java/quickstart.xml -f text > pmd_report.txt
+      run: |
+        ./pmd-bin-6.44.0/bin/run.sh pmd -d ./src -R rulesets/java/quickstart.xml -f text > pmd_report.txt
     - name: Check PMD violations
-        run: |
-          if grep -q "violation" pmd_report.txt; then
-            cat pmd_report.txt
-            exit 1
-          else
-            echo "No PMD violations found."
-          fi
+      run: |
+        if grep -q "violation" pmd_report.txt; then
+          cat pmd_report.txt
+          exit 1
+        else
+          echo "No PMD violations found."
+        fi
           
     - name: Build with Maven
       run: mvn -B package --file pom.xml
