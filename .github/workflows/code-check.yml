@@ -1,0 +1,30 @@
+name: Code Quality Checks
+
+on: [pull_request]
+
+jobs:
+  spotbugs:
+    name: SpotBugs Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Run SpotBugs
+        run: mvn clean verify
+
+  checkstyle:
+    name: Checkstyle Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Run Checkstyle
+        run: mvn checkstyle:check
